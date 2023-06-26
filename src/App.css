@@ -1,0 +1,12 @@
+.note-item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 50px;
+    padding: 10px;
+}
+
+.flex-two{
+    display: flex;
+    justify-content: space-around;
+}

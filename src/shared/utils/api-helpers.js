@@ -17,7 +17,8 @@ export function commonPostJson(url, data, customHeaders) {
     return fetch(getBackendUrl() + url, {
         headers: {
             ...customHeaders,
-            token: localStorage.getItem('token')
+            token: localStorage.getItem('token'),
+            'Content-Type':'application/json'
         },
         method: "POST",
         body: JSON.stringify(data)
@@ -28,7 +29,8 @@ export function commonPutJson(url, data, customHeaders) {
     return fetch(getBackendUrl() + url, {
         headers: {
             ...customHeaders,
-            token: localStorage.getItem('token')
+            token: localStorage.getItem('token'),
+            'Content-Type':'application/json'
         },
         method: "PUT",
         body: JSON.stringify(data)
