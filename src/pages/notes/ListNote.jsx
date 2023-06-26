@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { commonDeleteJson, commonGetJson } from '../../shared/utils/api-helpers'
+import { removeNote, setNotes } from '../../data/notesSlice'
 import NoteItem from './NoteItem'
+import { useDispatch, useSelector } from 'react-redux'
 
 export default function ListNote() {
-    const [notes, setNotes] = useState([])
-
+    const { notes } = useSelector(state => state.notes)
+    const dispatch = useDispatch()
 
     function deleteNote(_id) {
         if (window.confirm("Are you sure want to delete this note?")) {
@@ -14,7 +16,7 @@ export default function ListNote() {
                         alert(x.message)
                     } else {
                         alert("Deleted")
-                        setNotes(notes.filter(x => x._id != _id))
+                        dispatch(removeNote(_id))
                     }
                 })
         }
@@ -26,7 +28,7 @@ export default function ListNote() {
                 if (x.status == false) {
                     alert(x.message)
                 } else {
-                    setNotes(x)
+                    dispatch(setNotes(x))
                 }
             })
     }

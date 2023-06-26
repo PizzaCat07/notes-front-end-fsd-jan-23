@@ -1,9 +1,13 @@
 import React, { useState } from 'react'
 import { commonPostJson } from '../../shared/utils/api-helpers'
+import { useDispatch } from 'react-redux';
+import { setNotes } from '../../data/notesSlice';
 
 export default function AddNote() {
     const [noteText, setNoteText] = useState('')
-    const [noteColor, setNoteColor] = useState('white')
+    const [noteColor, setNoteColor] = useState('white');
+
+    const dispatch = useDispatch()
 
     function saveNote() {
         let noteObj = {
@@ -15,8 +19,9 @@ export default function AddNote() {
             .then(x => {
                 if (x.status == false) {
                     alert(x.message)
-                } else {                    
-                    alert('Note created')
+                } else {
+                    alert('Note created');
+                    dispatch(setNotes(x))
                 }
             })
     }
