@@ -1,11 +1,21 @@
 import React, { useEffect, useState } from 'react'
+import jwtDecode from 'jwt-decode'
 import { useNavigate } from 'react-router-dom'
 
 export default function ProtectedRoute({ children }) {
     const navigate = useNavigate()
     useEffect(() => {
-        if (localStorage.getItem('token')) {
-            setIsAuthenticated(true)
+        let token = localStorage.getItem('token')
+        if (token) {
+            let decoded = jwtDecode(token);
+            let expire = decoded.exp * 1000;
+            if ((new Date()).getTime() < expire) {
+                setIsAuthenticated(true)
+            } else {
+                setIsAuthenticated(false)
+                localStorage.clear()
+                navigate('/login')
+            }
         }
         else {
             setIsAuthenticated(false)
