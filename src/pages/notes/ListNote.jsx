@@ -1,36 +1,22 @@
 import React, { useEffect } from 'react'
-import { commonDeleteJson, commonGetJson } from '../../shared/utils/api-helpers'
-import { removeNote, setNotes } from '../../data/notesSlice'
+import { deleteNote, getAllNotes } from '../../data/notesSlice'
 import NoteItem from './NoteItem'
 import { useDispatch, useSelector } from 'react-redux'
+import Spinner from '../../shared/components/Spinner'
 
 export default function ListNote() {
-    const { notes } = useSelector(state => state.notes)
+    const { notes, areNotesBeingFetched } = useSelector(state => state.notes)
+
     const dispatch = useDispatch()
 
-    function deleteNote(_id) {
-        if (window.confirm("Are you sure want to delete this note?")) {
-            commonDeleteJson('/notes/' + _id)
-                .then(x => {
-                    if (x.status == false) {
-                        alert(x.message)
-                    } else {
-                        alert("Deleted")
-                        dispatch(removeNote(_id))
-                    }
-                })
-        }
+    function deleteItem(_id) {
+        // if (window.confirm("Are you sure want to delete this note?")) {
+        // }
+        dispatch(deleteNote(_id))
     }
 
     function getNotes() {
-        commonGetJson('/notes')
-            .then(x => {
-                if (x.status == false) {
-                    alert(x.message)
-                } else {
-                    dispatch(setNotes(x))
-                }
-            })
+        dispatch(getAllNotes())
     }
 
     useEffect(() => {
@@ -43,9 +29,12 @@ export default function ListNote() {
             <button onClick={getNotes}>Refresh</button>
             <hr />
             {
-                notes.map(x =>
-                    <NoteItem noteColor={x.noteColor} noteText={x.noteText} _id={x._id} deleteNote={deleteNote} />
-                )
+                areNotesBeingFetched ?
+                    <Spinner />
+                    :
+                    notes.map(x =>
+                        <NoteItem key={x._id} noteColor={x.noteColor} noteText={x.noteText} _id={x._id} deleteNote={deleteItem} />
+                    )
             }
         </div>
     )
