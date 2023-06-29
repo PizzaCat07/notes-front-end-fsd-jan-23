@@ -4,8 +4,7 @@ import './App.css';
 import Login from './pages/login/Login';
 import Signup from './pages/signup/Signup';
 import Notes from './pages/notes/Notes';
-import Spinner from './shared/components/Spinner';
-import Loader from './shared/components/Loader';
+import ProtectedRoute from './shared/components/ProtectedRoute';
 
 function App() {
   return (
@@ -15,7 +14,7 @@ function App() {
         <Routes>
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<Signup />} />
-          <Route path='/notes' element={<Notes />} />
+          <Route path='/notes' element={<ProtectedRoute><Notes /></ProtectedRoute>} />
           <Route path='/' element={<Navigate to={'/login'} />} />
         </Routes>
       </div>

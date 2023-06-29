@@ -4,6 +4,7 @@ import ListNote from './ListNote'
 import Header from '../../shared/components/Header'
 
 export default function Notes() {
+  
   return (
     <>
       <Header/>
