@@ -2,10 +2,13 @@ import React, { useState } from 'react'
 import { commonPostJson } from '../../shared/utils/api-helpers'
 import { useDispatch } from 'react-redux';
 import { setNotes } from '../../data/notesSlice';
+import Spinner from '../../shared/components/Spinner';
+import Loader from '../../shared/components/Loader';
 
 export default function AddNote() {
     const [noteText, setNoteText] = useState('')
     const [noteColor, setNoteColor] = useState('white');
+    const [isNoteBeingLoaded, setIsNoteBeingLoaded] = useState(false)
 
     const dispatch = useDispatch()
 
@@ -14,9 +17,13 @@ export default function AddNote() {
             noteText,
             noteColor
         }
+        setIsNoteBeingLoaded(true)
+
 
         commonPostJson('/notes', noteObj)
             .then(x => {
+                setIsNoteBeingLoaded(false)
+
                 if (x.status == false) {
                     alert(x.message)
                 } else {
@@ -36,7 +43,13 @@ export default function AddNote() {
             <input type='color' value={noteColor} onChange={e => setNoteColor(e.target.value)} />
             <br />
             <br />
-            <button onClick={saveNote}>Save</button>
+            {
+                isNoteBeingLoaded
+                    ? <Spinner />
+                    : <button onClick={saveNote}>Save</button>
+
+            }
+
         </div>
     )
 }
