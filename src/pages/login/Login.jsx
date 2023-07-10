@@ -3,6 +3,7 @@ import { commonGetJson, commonPostJson } from '../../shared/utils/api-helpers'
 import { useNavigate } from 'react-router-dom'
 import Spinner from '../../shared/components/Spinner'
 import Loader from '../../shared/components/Loader'
+import { Button, TextField } from '@mui/material'
 
 export default function Login() {
   const [username, setUsername] = useState('')
@@ -37,16 +38,16 @@ export default function Login() {
   return (
     <div>
       <h1>Login</h1>
-      <input value={username} onChange={e => setUsername(e.target.value)} placeholder='Username' />
+      <TextField value={username} onChange={e => setUsername(e.target.value)} label='Username' variant='outlined' />
       <br />
       <br />
-      <input value={password} onChange={e => setPassword(e.target.value)} placeholder='Password' />
+      <TextField value={password} onChange={e => setPassword(e.target.value)} label='Password' variant='outlined' />
       <br />
       <br />
       {
         isLoggingIn
           ? <Loader />
-          : <button onClick={login}>Login</button>
+          : <Button variant='contained' onClick={login}>Login</Button>
       }
     </div>
   )
