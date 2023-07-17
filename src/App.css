@@ -64,3 +64,16 @@ div{
  border-radius: 1em;   
  margin-right: 5px;
 }
+
+.post-item{
+    margin: 10px;
+    border: 1px solid gray;
+    padding: 15px;
+}
+
+.post-item .heading{
+   display: flex;
+   gap: 15px;
+   height: 3rem;
+   align-items: center;
+}
