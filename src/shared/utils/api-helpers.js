@@ -59,3 +59,12 @@ export function commonDeleteJson(url, customHeaders) {
         method: "DELETE"
     }).then(x => x.json())
 }
+
+
+export function commonRawPost(url,data){
+    return fetch(getBackendUrl()  + url, {
+            method: 'POST',
+            body: data
+        })
+        .then(x => x.json())
+}

@@ -1,10 +1,12 @@
 import { Button, TextField } from '@mui/material'
 import { useForm } from "react-hook-form";
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { commonGetJson, commonPatchJson } from '../../shared/utils/api-helpers';
+import FileUpload from '../../shared/components/FileUpload';
 
 export default function Profile() {
 
+    const [avatar, setAvatarFileName] = useState('')
     const { register, handleSubmit, watch, formState: { errors }, setValue } = useForm();
 
     useEffect(() => {
@@ -16,19 +18,27 @@ export default function Profile() {
     }, [])
 
     function update(formData) {
+        formData["avatar"] = avatar
         commonPatchJson('/profile', formData).then(response => {
-            if(response.success){
+            if (response.success) {
                 alert("Updated")
-            }else{
+            } else {
                 alert(response.message)
             }
         })
     }
+
+    function fileUploaded(filename) {
+        setAvatarFileName(filename)
+    }
+
     return (
         <>
             <div>Profile</div>
             <br />
             <br />
+
+            <FileUpload onUpload={fileUploaded} />
             <form onSubmit={handleSubmit(update)}>
                 <TextField {...register("username")} label="Username" />
                 <br />

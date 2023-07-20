@@ -26,7 +26,7 @@ export default function PostList() {
         <div>
 
 
-            
+
             <TextField value={content} onChange={e => setContent(e.target.value)} label="Content" variant='outlined' />
             <Button variant='contained' onClick={save}>Create Post</Button>
 
@@ -36,7 +36,12 @@ export default function PostList() {
                 posts.map(x => <div className='post-item'>
 
                     <div className='heading'>
-                        <Avatar>{x.author?.username?.charAt(0)}</Avatar>
+                        {
+                            x?.author?.avatar
+                                ? <Avatar src={process.env.REACT_APP_BACKEND_URL + '/image/' + x?.author?.avatar} />
+                                : <Avatar>{x.author?.username?.charAt(0)}</Avatar>
+                        }
+
                         <span>{x.author?.username}</span>
                     </div>
                     <p>{x.content}</p>

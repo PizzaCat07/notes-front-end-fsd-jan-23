@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import jwtDecode from 'jwt-decode'
 import { useNavigate } from 'react-router-dom';
+import { Avatar } from '@mui/material';
 
 export default function Header() {
     const [userName, setUsename] = useState('')
+    const [avatar, setAvatar] = useState('')
     const navigate = useNavigate()
     useEffect(() => {
         let token = localStorage.getItem('token');
         if (token) {
             let decoded = jwtDecode(token);
             setUsename(decoded.username)
+            setAvatar(decoded.avatar)
         }
     }, [])
 
@@ -24,6 +27,13 @@ export default function Header() {
         <div className='app-header'>
             <div className="app-name"></div>
             <div className="user-info">
+                {
+                    avatar ?
+                    <Avatar src={process.env.REACT_APP_BACKEND_URL + '/image/' + avatar}/>
+                    :
+                    <Avatar>{userName?.charAt(0)}</Avatar>
+                    
+                }
                 <span>
                     Welcome,
                 </span>
