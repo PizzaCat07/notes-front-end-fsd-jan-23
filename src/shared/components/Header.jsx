@@ -17,10 +17,22 @@ export default function Header() {
         localStorage.clear();
         navigate('/login')
     }
+    function gotoProfile(){
+        navigate('/profile')
+    }
     return (
         <div className='app-header'>
             <div className="app-name"></div>
-            <div className="user-info">Welcome, {userName}<br /><span onClick={logout}>Logout</span></div>
+            <div className="user-info">
+                <span>
+                    Welcome,
+                </span>
+                <span  onClick={gotoProfile}>
+                    {userName}
+                </span>
+                <br />
+                <span onClick={logout}>Logout</span>
+            </div>
         </div>
     )
 }

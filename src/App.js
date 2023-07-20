@@ -7,6 +7,7 @@ import Notes from './pages/notes/Notes';
 import ProtectedRoute from './shared/components/ProtectedRoute';
 import BooksList from './pages/books/BooksList';
 import PostList from './pages/posts/PostList';
+import Profile from './pages/profile/Profile';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Routes>
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<Signup />} />
+          <Route path='/profile' element={<ProtectedRoute><Profile /></ProtectedRoute>} />
           <Route path='/notes' element={<ProtectedRoute><Notes /></ProtectedRoute>} />
           <Route path='/books-list' element={<ProtectedRoute><BooksList /></ProtectedRoute>} />
           <Route path='/posts-list' element={<ProtectedRoute><PostList /></ProtectedRoute>} />

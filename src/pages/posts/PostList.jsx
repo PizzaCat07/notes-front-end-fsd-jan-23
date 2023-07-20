@@ -25,6 +25,8 @@ export default function PostList() {
     return (
         <div>
 
+
+            
             <TextField value={content} onChange={e => setContent(e.target.value)} label="Content" variant='outlined' />
             <Button variant='contained' onClick={save}>Create Post</Button>
 

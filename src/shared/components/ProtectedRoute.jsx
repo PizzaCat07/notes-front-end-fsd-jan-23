@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import jwtDecode from 'jwt-decode'
 import { useNavigate } from 'react-router-dom'
+import Header from './Header'
 
 export default function ProtectedRoute({ children }) {
     const navigate = useNavigate()
@@ -27,7 +28,11 @@ export default function ProtectedRoute({ children }) {
     return (
         <>
             {
-                isAuthenticated ? children : <></>
+                isAuthenticated ?
+                    <>
+                        <Header />
+                        {children}
+                    </> : <></>
             }
         </>
     )
