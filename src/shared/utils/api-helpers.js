@@ -37,6 +37,18 @@ export function commonPutJson(url, data, customHeaders) {
     }).then(x => x.json())
 }
 
+export function commonPatchJson(url, data, customHeaders) {
+    return fetch(getBackendUrl() + url, {
+        headers: {
+            ...customHeaders,
+            token: localStorage.getItem('token'),
+            'Content-Type':'application/json'
+        },
+        method: "PATCH",
+        body: JSON.stringify(data)
+    }).then(x => x.json())
+}
+
 
 export function commonDeleteJson(url, customHeaders) {
     return fetch(getBackendUrl() + url, {
