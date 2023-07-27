@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { commonGetJson, commonPostJson } from '../../shared/utils/api-helpers'
 import CommnetItem from './CommnetItem'
-import { TextField } from '@mui/material'
+import { Button, TextField } from '@mui/material'
 import { useForm } from 'react-hook-form';
 
 export default function CommentsList({ postId }) {
@@ -9,6 +9,7 @@ export default function CommentsList({ postId }) {
 
     const [comments, setComments] = useState([])
     useEffect(() => {
+
         commonGetJson('/comments/' + postId).then(response => {
             setComments(response)
         })
@@ -16,8 +17,10 @@ export default function CommentsList({ postId }) {
     }, [])
 
     function addComment(data) {
-        commonPostJson('/comments/' + postId,data).then(response => {
-            setComments(response)
+        commonPostJson('/comments/' + postId, data).then(r => {
+            commonGetJson('/comments/' + postId).then(response => {
+                setComments(response)
+            })
         })
     }
 
@@ -26,12 +29,12 @@ export default function CommentsList({ postId }) {
         <div>
             <form onSubmit={handleSubmit(addComment)}>
                 <TextField {...register('commentText')} label='Write a comment' />
+                <Button variant='contained' type='submit' >Send</Button >
             </form>
             <hr />
             {
-                comments.map(x => {
-                    <CommnetItem commentObject={x} allComments={comments} />
-                })
+                comments.map(x => <CommnetItem commentObject={x} allComments={comments} />
+                )
             }
         </div>
     )

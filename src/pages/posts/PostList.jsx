@@ -8,6 +8,7 @@ export default function PostList() {
 
     const [content, setContent] = useState('')
     const { posts, isPostLoading } = useSelector(state => state.posts)
+    const [showComments, setShowComments] = useState(false)
 
     const dispatch = useDispatch();
 
@@ -21,6 +22,8 @@ export default function PostList() {
         }
         dispatch(createNewPost(postObject))
     }
+
+
 
 
     return (
@@ -46,8 +49,10 @@ export default function PostList() {
                         <span>{x.author?.username}</span>
                     </div>
                     <p>{x.content}</p>
-                    <p>Show commnets</p>
-                    <CommentsList postId={x._id}/>
+                    <p onClick={() => setShowComments(true)}>Show commnets</p>
+                    {
+                        showComments ? <CommentsList postId={x._id} /> : <></>
+                    }
                 </div>)
             }
         </div>
