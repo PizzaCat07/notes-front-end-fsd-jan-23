@@ -3,12 +3,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { createNewPost, getAllPosts } from '../../data/postsSlice';
 import { Avatar, Button, TextField } from '@mui/material';
 import CommentsList from './CommentsList';
+import PostItem from './PostItem';
 
 export default function PostList() {
 
     const [content, setContent] = useState('')
     const { posts, isPostLoading } = useSelector(state => state.posts)
-    const [showComments, setShowComments] = useState(false)
 
     const dispatch = useDispatch();
 
@@ -37,23 +37,7 @@ export default function PostList() {
             <hr />
 
             {
-                posts.map(x => <div className='post-item'>
-
-                    <div className='heading'>
-                        {
-                            x?.author?.avatar
-                                ? <Avatar src={process.env.REACT_APP_BACKEND_URL + '/image/' + x?.author?.avatar} />
-                                : <Avatar>{x.author?.username?.charAt(0)}</Avatar>
-                        }
-
-                        <span>{x.author?.username}</span>
-                    </div>
-                    <p>{x.content}</p>
-                    <p onClick={() => setShowComments(true)}>Show commnets</p>
-                    {
-                        showComments ? <CommentsList postId={x._id} /> : <></>
-                    }
-                </div>)
+                posts.map(x => <PostItem post={x}/>)
             }
         </div>
     )

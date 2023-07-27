@@ -3,38 +3,45 @@ import { commonGetJson, commonPostJson } from '../../shared/utils/api-helpers'
 import CommnetItem from './CommnetItem'
 import { Button, TextField } from '@mui/material'
 import { useForm } from 'react-hook-form';
+import Spinner from '../../shared/components/Spinner';
 
 export default function CommentsList({ postId }) {
     const { register, handleSubmit, watch, formState: { errors }, setValue } = useForm();
+    const [loading, setLoading] = useState(false)
 
     const [comments, setComments] = useState([])
     useEffect(() => {
 
+        setLoading(true)
         commonGetJson('/comments/' + postId).then(response => {
             setComments(response)
+        }).finally(x => {
+            setLoading(false)
         })
 
     }, [])
 
     function addComment(data) {
         commonPostJson('/comments/' + postId, data).then(r => {
-            commonGetJson('/comments/' + postId).then(response => {
-                setComments(response)
-            })
+            setComments(r.data)
         })
     }
 
     return (
 
-        <div>
-            <form onSubmit={handleSubmit(addComment)}>
+        <div className='comments-container'>
+            <form className='comment-form' onSubmit={handleSubmit(addComment)}>
                 <TextField {...register('commentText')} label='Write a comment' />
                 <Button variant='contained' type='submit' >Send</Button >
             </form>
             <hr />
             {
-                comments.map(x => <CommnetItem commentObject={x} allComments={comments} />
-                )
+                loading ?
+                    <Spinner />
+                    :
+                    comments.filter(x => !(x.replyTo))
+                        .map(x => <CommnetItem commentObject={x} allComments={comments} />
+                        )
             }
         </div>
     )
