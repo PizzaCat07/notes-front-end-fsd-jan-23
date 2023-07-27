@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { createNewPost, getAllPosts } from '../../data/postsSlice';
 import { Avatar, Button, TextField } from '@mui/material';
+import CommentsList from './CommentsList';
 
 export default function PostList() {
 
@@ -45,6 +46,8 @@ export default function PostList() {
                         <span>{x.author?.username}</span>
                     </div>
                     <p>{x.content}</p>
+                    <p>Show commnets</p>
+                    <CommentsList postId={x._id}/>
                 </div>)
             }
         </div>

@@ -11,6 +11,7 @@ export const createNewPost = createAsyncThunk('createNewPost', async (data) => {
 })
 
 
+
 const postsSlice = createSlice({
     name: 'posts',
     initialState: {
