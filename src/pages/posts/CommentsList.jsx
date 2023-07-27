@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { commonGetJson, commonPostJson } from '../../shared/utils/api-helpers'
 import CommnetItem from './CommnetItem'
-import { Button, TextField } from '@mui/material'
+import { Button, Skeleton, TextField } from '@mui/material'
 import { useForm } from 'react-hook-form';
 import Spinner from '../../shared/components/Spinner';
 
@@ -37,7 +37,12 @@ export default function CommentsList({ postId }) {
             <hr />
             {
                 loading ?
-                    <Spinner />
+                    <div>
+                        <Skeleton height={50} width={300}/>
+                        <Skeleton height={50} width={300}/>
+                        <Skeleton height={50} width={300}/>
+                        <Skeleton height={50} width={300}/>
+                    </div>
                     :
                     comments.filter(x => !(x.replyTo))
                         .map(x => <CommnetItem commentObject={x} allComments={comments} />
