@@ -25,7 +25,12 @@ export default function Header() {
     }
     return (
         <div className='app-header'>
-            <div className="app-name"></div>
+            <div className="app-name">
+                <a href='/profile'>Profile</a>
+                <a href='/notes'>Notes</a>
+                <a href='/books-list'>Books</a>
+                <a href='/posts-list'>Timeline</a>
+            </div>
             <div className="user-info">
                 {
                     avatar ?

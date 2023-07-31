@@ -85,7 +85,7 @@ div{
     margin-bottom: 10px;
     padding: 10px;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     position: sticky;
     top: 0;
 }
@@ -146,4 +146,16 @@ div{
 .login-page-container{
     display: flex;
     justify-content: center;
+}
+
+.app-name{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.app-name>a{
+    color: white;
+    text-decoration: none;
 }
